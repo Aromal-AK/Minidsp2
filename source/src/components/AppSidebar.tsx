@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -49,11 +50,10 @@ export function AppSidebar() {
   return (
     <nav className="lp-sidebar" aria-label="Primary" style={{ width: "100px" }}>
       <div className="lp-sidebar__header">
-        {/* Logo paths from design.md §5 Sidebar; its raw-hex fill is replaced by a token (no exact token exists). */}
-        <svg className="app-logo" width="40" height="26" viewBox="0 0 40 26" fill="currentColor" aria-label="Lepide" role="img">
-          <path d="M10 2h6l-10 22h-6Z" /><path d="M20 2h6l-10 22h-6Z" /><path d="M30 2h6l-10 22h-6Z" />
-        </svg>
-        <span className="app-brand">MiniDSP</span>
+        <div className="app-brand-lockup">
+          <Image className="app-logo" src="/lepide-mark.svg" alt="Lepide" width={48} height={48} priority />
+          <span className="app-brand">Mini LDSP</span>
+        </div>
       </div>
       <ul className="lp-sidebar__items">
         {NAV.map((item) => {

@@ -38,6 +38,14 @@ body {
 .app-brand {
   color: var(--color-text-inverse);
   font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.app-brand-lockup {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
 }
 
 .app-logo {
@@ -93,6 +101,24 @@ body {
 
 .table-scroll {
   overflow-x: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.file-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-text-secondary);
 }
 
 .auth-page {

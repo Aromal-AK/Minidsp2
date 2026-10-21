@@ -19,6 +19,29 @@ describe("UploadPanel", () => {
   beforeEach(() => vi.restoreAllMocks());
   afterEach(() => vi.unstubAllGlobals());
 
+  it("Choose file is a real button that opens the file picker and shows the chosen name", () => {
+    render(<UploadPanel />);
+    const input = screen.getByLabelText("Synthetic file") as HTMLInputElement;
+    const click = vi.spyOn(input, "click");
+    const button = screen.getByRole("button", { name: "Choose file" });
+    expect(button).toBeEnabled();
+    expect(screen.getByText("No file chosen")).toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(click).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(input, { target: { files: [new File(["synthetic"], "people.csv", { type: "text/csv" })] } });
+    expect(screen.getByText("people.csv")).toBeInTheDocument();
+  });
+
+  it("disables Choose file while a scan is running", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {})));
+    render(<UploadPanel />);
+    chooseFile();
+    await screen.findByText("Scanning file…");
+    expect(screen.getByRole("button", { name: "Choose file" })).toBeDisabled();
+  });
+
   it("renders masked values in the result table", async () => {
     vi.stubGlobal(
       "fetch",

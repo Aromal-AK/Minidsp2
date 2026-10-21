@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { FindingsFilters } from "../../../components/FindingsFilters";
 import { Card, CellText, EmptyState, ErrorMessage, RiskBadge, Spinner, Table } from "../../../components/lp";
 import type { FindingType, Risk } from "../../../lib/detection/types";
+import { buildFindingsExportHref } from "../../../lib/findings/export";
 import { parseFindingFilters } from "../../../lib/findings/filters";
 import { requireUser } from "../../../lib/supabase/require-user";
 import { TYPE_LABELS, formatDate } from "../../../lib/ui/labels";
@@ -50,7 +51,14 @@ async function FindingsContent({ searchParams }: { searchParams: SearchParams })
           />
         </Card>
       ) : (
-        <Card title={`Findings (${rows.length})`}>
+        <Card
+          title={`Findings (${rows.length})`}
+          actions={
+            <a className="lp-button lp-button--secondary lp-button--md" href={buildFindingsExportHref(filters)} download>
+              Export CSV
+            </a>
+          }
+        >
           <Table<FindingRow>
             caption="Findings"
             rows={rows}

@@ -22,6 +22,7 @@ type State =
 
 export function UploadPanel() {
   const [state, setState] = useState<State>({ status: "idle" });
+  const [fileName, setFileName] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
   const hintId = `${inputId}-hint`;
@@ -58,17 +59,29 @@ export function UploadPanel() {
           <div className="lp-input lp-input--full-width">
             <div className="lp-input__row lp-input__row--label-top">
               <label className="lp-input__label" htmlFor={inputId}>Synthetic file</label>
-              <div className={`lp-input__field${loading ? " lp-input__field--disabled" : ""}`}>
+              <div className="toolbar">
                 <input
                   ref={fileRef}
-                  className="lp-input__input"
+                  className="visually-hidden"
                   id={inputId}
                   name="file"
                   type="file"
                   accept=".csv,.txt,text/csv,text/plain"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  disabled={loading}
+                  onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+                />
+                <button
+                  type="button"
+                  className="lp-button lp-button--secondary lp-button--md"
                   aria-describedby={hintId}
                   disabled={loading}
-                />
+                  onClick={() => fileRef.current?.click()}
+                >
+                  Choose file
+                </button>
+                <span className="file-name" role="status">{fileName ?? "No file chosen"}</span>
               </div>
             </div>
             <div className="lp-input__message" id={hintId}>

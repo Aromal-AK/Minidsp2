@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Suspense } from "react";
 import { ErrorMessage } from "../../components/lp";
 import { signIn } from "./actions";
@@ -12,10 +13,7 @@ export default function LoginPage({ searchParams }: { searchParams: Promise<{ er
   return (
     <main className="auth-page">
       <div className="auth-panel stack">
-        <svg className="app-logo" width="150" height="33" viewBox="0 0 150 33" fill="currentColor" role="img" aria-label="Lepide">
-          <path d="M10 3h6L6 25H0Z" /><path d="M20 3h6L16 25H10Z" /><path d="M30 3h6L26 25H20Z" />
-          <text x="46" y="25" fontSize="26">Lepide</text>
-        </svg>
+        <Image className="app-logo" src="/lepide-mark.svg" alt="Lepide" width={64} height={64} priority />
         <section className="lp-card lp-card--elevated lp-card--borderless">
           <div className="lp-card__header">
             <div className="lp-card__title">
